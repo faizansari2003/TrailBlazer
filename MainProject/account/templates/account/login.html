@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+<head>
+  <style>
+    /* General Reset */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: white;
+    }
+
+    /* Login Container */
+    .login-container {
+      align-content: space-between;
+      margin-top: -2%;
+      padding: 0 5%;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Left Side */
+    .left-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .title-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .title-container img {
+      
+      width: 15%;
+      margin-left: -82.5%;
+      height: auto;
+      margin-bottom: -4.18%;
+     /* Adjust to align with the title */
+    }
+
+    .left-side h2 {
+      font-family: 'Racing Sans One', sans-serif;
+      font-size: 3.9rem;
+      color: #C6262C;
+      line-height: 1.2;
+      margin-left: 10%;
+      margin-bottom: 15%;
+    }
+
+    /* Form Wrapper */
+    .form-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-box {
+      max-width: 90;
+      background: #fff;
+      padding: 5% 10%;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-box h2 {
+      font-family: 'Racing Sans One', sans-serif;
+      color: #C6262C;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-box form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-box form input,
+    .form-box form button {
+      height: 45px;
+      border-radius: 6px;
+      border: 1.5px solid #C7BEBE;
+      padding: 0 15px;
+      font-size: 16px;
+      color: black;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    .form-box form input:focus,
+    .form-box form button:focus {
+      border-color: #C6262C;
+    }
+
+    .form-box form button {
+      background: #C6262C;
+      font-size: 1.5rem;
+      font-family: 'Racing Sans One', sans-serif;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-box form button:hover {
+      background: #a71e23;
+    }
+
+    .additional-links {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .additional-links a {
+      color: #C6262C;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-family: 'Racing Sans One', sans-serif;
+    }
+
+    .additional-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<div class="login-container">
+  <!-- Left side with title -->
+  <div class="left-side">
+    <div class="title-container">
+      <img src="{% static 'images/sport.png' %}" alt="Sport Icon">
+      <h2>CONQUER&nbsp;EVERY&nbsp;TRAIL</h2>
+    </div>
+  </div>
+
+  <!-- Right side with form -->
+  <div class="form-wrapper">
+    <div class="form-box">
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <h2>LOGIN</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit">Login</button>
+        <div class="additional-links">
+          <p>Don't have an account? <a href="{% url 'register' %}">Register now</a></p>
+          <p>Forgot password? <a href="{% url 'forgot_password' %}">Click here</a></p>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

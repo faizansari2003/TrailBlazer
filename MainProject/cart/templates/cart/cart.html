@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load total %}
+{% block content %}
+    <!--<div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0">
+                    <a href="{% url 'home' %}">Home</a> 
+                    <span class="mx-2 mb-0">/</span> 
+                    <strong class="text-black">Cart</strong>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    
+
+    <div class="site-section">
+        <div class="container">
+            <div class="row mb-5">
+                {% if cart %}
+                
+                <form action="{% url 'update_cart' %}" method="post" class="col-md-12">
+                    <div><h2 style="font-family: 'Racing Sans One', sans-serif;margin-left: 2.5%;font-size: 3rem;text-align: center;margin-top: -2.5%;margin-bottom: 2%;">YOUR CART</h2></div>
+                    {% csrf_token %}
+                    <div class="site-blocks-table">
+                        <table class="table table-bordered">
+                            <thead >
+                                <tr style="font-family: 'Racing Sans One', sans-serif;">
+                                    <th class="product-thumbnail">Image</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-total">Total</th>
+                                    <th class="product-remove">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart %}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="{{ item.product.image.url }}" alt="Product Image" class="img-fluid" style="width: 100px;">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">{{ item.product.name }}</h2>
+                                    </td>
+                                    <td style="font-weight: bold;">&#8377; {{ item.product.price}}</td>
+                                    <td>
+                                        <div class="input-group mb-3" style="max-width: 120px;margin-left: 11%;">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-primary js-btn-minus" type="button" style="background-color: #C6262C;border-color: #C6262C;color: white;" >&minus;</button>
+                                            </div>
+                                            <input type="text" class="form-control text-center" aria-label="Example text with button addon"
+                                            name="{{ item.id }}" 
+                                            value="{{ item.quantity }}" 
+                                            min="0" max="{{ item.product.quantity }}" step="1" style="color: #C6262C;border-color: #C6262C;">
+                                            <!--<input type="number" class="form-control text-center" 
+                                                name="{{ item.id }}" 
+                                                value="{{ item.quantity }}" 
+                                                min="0" max="{{ item.product.quantity }}" step="1">-->
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-primary js-btn-plus" type="button" style="background-color: #C6262C;border-color: #C6262C;color: white;">&plus;</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: bold;">&#8377; {{ item|item_total_price }}</td>
+                                    <td>
+                                        <a href="{% url 'remove_item_from_cart' item.id %}" class="btn btn-primary btn-sm" style="font-family: 'Racing Sans One', sans-serif;background-color: #C6262C;border-color: #C6262C;color: white;">X</a>
+                                    </td>
+                                </tr>
+                                
+                                {% endfor %}
+                                <tr>
+                                    {% if messages %}
+                                    
+                                        {% for message in messages %}
+                                            <p class="{{ message.tags }}" style="font-weight: bold;margin-bottom: 0px;">{{ message }}</p>
+                                        {% endfor %}
+                                   
+                                {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row mb-5">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <button type="submit" class="btn btn-primary btn-sm btn-block" style="font-family: 'Racing Sans One', sans-serif;background-color: #C6262C;border-color: #C6262C;">Update Cart</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{% url 'clear_cart' %}" class="btn btn-outline btn-sm btn-block" style="color: #C6262C;border-color: #C6262C;font-family: 'Racing Sans One', sans-serif;">Clear Cart</a>
+                                </div>
+                                
+                                
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-5">
+                            <div class="row justify-content-end">
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        <div class="col-md-12 text-right border-bottom mb-5">
+                                            <h3 class="text-black h4 text-uppercase" style="font-family: 'Racing Sans One', sans-serif;color:black;">Cart Total</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <span class="text-black" style="font-family: 'Racing Sans One', sans-serif;color: black;">Total</span>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <strong class="text-black" style="font-size: 1rem;font-family: 'Racing Sans One', sans-serif;">&#8377; {{ cart|total_price }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="{% url 'checkout' %}" class="btn btn-outline btn-sm btn-block" style="color: white;background-color: #C6262C;border-color: #C6262C;font-family: 'Racing Sans One', sans-serif;font-size: 3rem;">CHECKOUT</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <h1 style="font-family: 'Racing Sans One', sans-serif;position: relative;margin-left: 28%;font-size: 4rem;">your cart is empty</h1>
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <a href="{% url 'all_products' %}"><button type="submit" class="btn btn-primary btn-sm btn-block" style="font-family: 'Racing Sans One', sans-serif;background-color: #C6262C;border-color: #C6262C;left: 55%;margin-top: 10%;">Keep Shopping</button></a>
+                </div>
+               
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br>
+{% endblock %}

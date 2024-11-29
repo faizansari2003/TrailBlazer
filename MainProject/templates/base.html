@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Trail Blazers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+
+
+    
+  </head>
+  <body>
+    <!-- Primary navbar -->
+    <div class="site-wrap">
+      <header class="site-navbar" role="banner">
+        <div class="site-navbar-top" style="margin-top: 0px; padding-top: 0px; margin-bottom: 0px; padding-bottom: 0px; position: sticky;">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                <form action="{% url 'search_product' %}" method="get" class="site-block-top-search">
+                    <span class="icon icon-search2"></span>
+                    <input type="text" name="q" class="form-control border-0" placeholder="Search" value="{{ query|default:'' }}">
+                </form>
+            </div>
+
+              <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                <div class="">
+                  <a href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Trail Blazers Logo" class="logo-img" width="80%" height="100px"  style="left: 4%;position: relative;">
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                <div class="site-top-icons">
+                  <ul style="margin-top: 15px; margin-bottom: 10px;">
+                    {% if user.is_authenticated %}
+                      <!-- Show Logout and Welcome message when user is logged in -->
+                      <li style="color: #C6262C;font-family: 'Racing Sans One', sans-serif;"><span>Welcome {{ user.username }} &nbsp; &nbsp; </span></li>
+                      
+                    {% else %}
+                      <!-- Show Person icon when user is not logged in -->
+                      <li><a href="{% url 'login' %}"><span class="icon icon-person"></span></a></li>
+                    {% endif %}
+
+                    <!-- Wishlist and Cart Icons -->
+                    <!--<li><a href="#"><span class="icon icon-heart-o"></span></a></li>-->
+                    <!-- Shopping cart -->
+
+                    {% if user.is_authenticated %}
+                    <li style="color: black;"><a href="{% url 'cart' %}" class="site-cart">
+
+                      <span class="icon icon-shopping_cart"></span>
+                      <span class="" style="background-color: white;color: #C6262C;font-family: 'Racing Sans One', sans-serif;font-size: 20px;position: relative;right: 10%;bottom: 12px;">
+                        {% if request.session.cart_item_count %}
+                        {{request.session.cart_item_count}}
+                        {% endif %}
+                      </span></a></li>
+
+                      <li><a href="{% url 'profile' %}"><span class="icon icon-person"><!--profile--></span></a></li>
+                      <li><a href="{% url 'logout' %}"><span class="fas fa-sign-out-alt" style="position: relative;bottom: 3px;left: 10px;"></span></a></li> <!-- Logout Icon -->
+                      {% endif %}
+                    <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary navbar-->
+<nav class="site-navigation text-center" role="navigation">
+  <div class="container" style="margin-top: -1.2%; padding-top: 0px; position: absolute; z-index: 10; left: 50%; transform: translateX(-50%);">
+    <ul class="site-menu js-clone-nav d-none d-md-block" style="color: #C6262C;font-family: 'Racing Sans One', sans-serif;font-size: 2rem; text-align: center;">
+      <li><a href="{% url 'home' %}" style="color: #C6262C;">Home</a></li>
+      <li><a href="{% url 'all_products' %}" style="color: #C6262C;">Shop</a></li>
+      <li><a href="{% url 'about' %}" style="color: #C6262C;">About</a></li>
+      <li><a href="{% url 'contact' %}" style="color: #C6262C;">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+      {% block content %}
+      {% endblock %}
+
+      <!-- Bootstrap Footer -->
+      <footer class="bg-dark text-light pt-5 pb-4" style="background-color:">
+        <div class="container text-center text-md-left" style="background-color:">
+          <div class="row text-center text-md-left">
+
+            <!-- About Section -->
+            <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4" style="font-family: 'Racing Sans One', sans-serif;font-size: 1.9rem;margin-top: -1%;" >Trail Blazers</h5>
+              <p>
+                "Welcome to Trail Blazers! We are passionate about bringing you the best mountain biking experience. Our mission is to provide you with top-quality mountain bikes and gear, ensuring you conquer every trail with confidence."
+              </p>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4" style="font-family: 'Racing Sans One', sans-serif;">Quick Links</h5>
+              <p><a href="{% url 'home' %}" class="text-light" style="text-decoration: none;">Home</a></p>
+              <p><a href="{% url 'all_products' %}" class="text-light" style="text-decoration: none;">Shop</a></p>
+              <p><a href="{% url 'about' %}" class="text-light" style="text-decoration: none;">About Us</a></p>
+              <p><a href="{% url 'contact' %}" class="text-light" style="text-decoration: none;">Contact</a></p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4" style="font-family: 'Racing Sans One', sans-serif;">Follow Us</h5>
+              <p><a href="#" class="text-light" style="text-decoration: none;"><i class="fab fa-facebook-f"></i> Facebook</a></p>
+              <p><a href="#" class="text-light" style="text-decoration: none;"><i class="fab fa-instagram"></i> Instagram</a></p>
+              <p><a href="#" class="text-light" style="text-decoration: none;"><i class="fab fa-twitter"></i> Twitter</a></p>
+              <p><a href="#" class="text-light" style="text-decoration: none;"><i class="fab fa-youtube"></i> YouTube</a></p>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4" style="font-family: 'Racing Sans One', sans-serif;">Contact</h5>
+              <p><i class="fas fa-home mr-3"></i> 123 Trailblazer St, Mountain City</p>
+              <p><i class="fas fa-envelope mr-3"></i> info@trailblazers.com</p>
+              <p><i class="fas fa-phone mr-3"></i> +1 234 567 890</p>
+            </div>
+
+          </div>
+
+          <!-- Copyright and Credits -->
+          <div class="row mt-3">
+            <div class="col-md-12 col-lg-12 col-xl-12 mx-auto text-center">
+              <p class="text-muted">© 2024 Trail Blazers. made by FAIZ</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Font Awesome for Icons -->
+      <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+      <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+      <script src="{% static 'js/jquery-ui.js' %}"></script>
+      <script src="{% static 'js/popper.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'js/aos.js' %}"></script>
+      <script src="{% static 'js/main.js' %}"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+  </body>
+</html>

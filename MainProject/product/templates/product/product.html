@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class=" py-3">
+    <div class="container">
+      <div class="row" style="margin-top: -0.5%;">
+        <a href="{% url 'all_products' %}" style="color: #C6262C;">Shop</a> 
+            <span class="mx-2 mb-0">/</span> <strong class="text-black">{{product.name}}</strong></div>
+      </div>
+    </div>
+  </div>  
+
+<!-- Product Details Section -->
+<div class="site-section" style="margin-bottom: 0;padding-bottom: 0;background-color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ product.image.url }}" alt="Image" class="img-fluid">
+            </div>
+            <div class="col-md-6" style="padding-left: 10%;">
+                <h2 class="text-black" style="font-size: 3rem;font-family: 'Racing Sans One', sans-serif;">{{ product.name }}</h2>
+                <p style="margin-top: 5%;margin-bottom: 7%;">{{ product.description }}</p>
+                <p style="color: black;"><strong class="" style="font-size: 2.2rem;color: black;">&#8377;{{ product.price }}</strong></p>
+
+                <!-- Size Options -->
+
+                <!-- Add to Cart Button -->
+                <div class="mb-5">
+                    <div class="input-group mb-3" style="max-width: 120px;">
+                        <!--<div class="input-group-prepend">
+                            <button class="btn btn-outline-primary js-btn-minus" type="button" style="color: white;background-color: #C6262C;border-color:black;">&minus;</button>
+                        </div>
+                        <input type="text" class="form-control text-center" value="1" aria-label="Example text with button addon" style="color: #C6262C;border-color: #C6262C;">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary js-btn-plus" type="button" style="color: white;background-color: #C6262C;border-color:black;">&plus;</button>
+                        </div>-->
+                    </div>
+                </div>
+
+            
+                    <p><a href="{% url 'add_to_cart' product.id %}" class="buy-now btn btn-sm btn-primary" style="color: white;background-color: #C6262C;;margin-top: -10%;border-color: #C6262C;font-family: 'Racing Sans One', sans-serif;">Add To Cart</a></p>
+
+
+                {% if messages %}
+                {% for message in messages %}
+                <p class="{{ message.tags }}" style="font-weight: bold;">{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+
+
+                
+                    <!--<p><a href="{% url 'login' %}" class="buy-now btn btn-sm btn-primary" style="background-color: #C6262C;border-color: #C6262C;font-family: 'Racing Sans One', sans-serif;">Login to Add to Cart</a></p>-->
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Similar Products Section -->
+<div class="site-section block-3 site-blocks-2">
+    <div class="container" style="margin-top: %;padding-top: 0;">
+        <div class="row justify-content-center">
+            <div class="col-md-7 site-section-heading text-center pt-4">
+                <h2 style="color: #C6262C;font-family: 'Racing Sans One', sans-serif;font-size: 3rem;margin-bottom: 10%;margin-top: 5%;">SIMILAR &nbsp;PRODUCTS</h2>
+            </div>
+        </div>
+
+        <!-- Carousel Container for Similar Products -->
+        <div id="similar-products-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        {% for similar_product in similar_products|slice:":3" %}
+                            <div class="col-md-4">
+                                <div class="block-4 text-center">
+                                    <a href="{% url 'product' similar_product.id %}">
+                                        <figure class="block-4-image">
+                                            <img src="{{ similar_product.image.url }}" alt="Image" class="img-fluid">
+                                        </figure>
+                                        <div class="block-4-text p-4">
+                                            <h3><a href="{% url 'product' similar_product.id %}" style="color: black;">{{ similar_product.name }}</a></h3>
+                                            <p class=" font-weight-bold"  style="color: black;">&#8377;{{ similar_product.price }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        {% for similar_product in similar_products|slice:"3:6" %}
+                            <div class="col-md-4">
+                                <div class="block-4 text-center">
+                                    <a href="{% url 'product' similar_product.id %}">
+                                        <figure class="block-4-image">
+                                            <img src="{{ similar_product.image.url }}" alt="Image" class="img-fluid">
+                                        </figure>
+                                        <div class="block-4-text p-4">
+                                            <h3><a href="{% url 'product' similar_product.id %}" style="color: black;">&#8377;{{ similar_product.name }}</a></h3>
+                                            <p class=" font-weight-bold" style="color: black;">&#8377;{{ similar_product.price }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <a class="carousel-control-prev" href="#similar-products-carousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#similar-products-carousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+   
+    
+    #similar-products-carousel {
+        position: relative;  /* Makes the carousel relative to its container */
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        opacity: 100;
+        position: absolute;
+        top: 41%;  /* Vertically center the buttons */
+        transform: translateY(-50%);  /* Center buttons */
+        z-index: 1;  /* Ensures buttons appear above the other content */
+        color: #fff;  /* White color for visibility */
+
+    }
+    
+    .carousel-control-prev {
+        left: -15%;  /* Adjust the left position */
+    }
+    
+    .carousel-control-next {
+        right: -15%;  /* Adjust the right position */
+    }
+    
+    .carousel-control-prev-icon,
+.carousel-control-next-icon {
+
+    color: #C6262C; 
+    background-color: #C6262C; /* Red color for the arrows */
+    border-radius: 10%;  /* Makes the arrows round */
+    width: 50%;  /* Adjust size of the arrows */
+    height: 50%;
+}
+
+
+</style>
+
+
+{% endblock %}
